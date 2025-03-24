@@ -17,7 +17,7 @@ struct HuffmanNode
     HuffmanNode* right;
 };
 
-class Compare
+struct Compare
 {
     bool operator()(HuffmanNode* lhs, HuffmanNode* rhs)
     {

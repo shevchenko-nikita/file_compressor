@@ -24,7 +24,7 @@ void HuffmanTree::BuildTree(const std::unordered_map<unsigned char, int> &freque
         auto right = pt.top();
         pt.pop();
 
-        auto node = new HuffmanNode(0, left->freq + right.freq);
+        auto node = new HuffmanNode(0, left->freq + right->freq);
 
         node->left = left;
         node->right = right;
