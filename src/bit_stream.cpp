@@ -12,14 +12,10 @@ std::vector<bool> BitStream::Read()
 {
     std::vector<bool> bits;
 
-    while(true)
-    {
-        bool bit;
-        if(!ReadBit(bit))
-        {
-            break;
-        }
+    bool bit;
 
+    while(ReadBit(bit))
+    {
         bits.push_back(bit);
     }
 
@@ -30,18 +26,18 @@ bool BitStream::ReadBit(bool& bit)
 {
     if(bitCount == 0)
     {
-        bitCount = 8;
-        buffer = inFile.get();
+        inFile.read(reinterpret_cast<char*>(&buffer), 1);
 
-        if(buffer == EOF)
+        if(inFile.eof())
         {
             return false;
         }
-    }
 
-    std::cout << buffer << std::endl;
+        bitCount = 8;
+    }
 
     --bitCount;
     bit = (buffer >> bitCount) & 1;
+
     return true;
 }

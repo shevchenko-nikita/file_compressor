@@ -19,7 +19,7 @@ private:
     bool ReadBit(bool& bit);
 
     int bitCount;
-    int buffer;
+    uint8_t buffer;
 
     std::ifstream inFile;
     std::ofstream outFile;
