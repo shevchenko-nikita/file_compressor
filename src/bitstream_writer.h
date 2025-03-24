@@ -1,26 +1,25 @@
 #pragma once
 
-#include <fstream>
 #include <string>
 #include <vector>
+#include <fstream>
 
-class BitStream
+class BitStreamWriter
 {
 public:
-    BitStream(std::string inFileName, std::string outFileName);
+    BitStreamWriter(std::string outFileName);
 
-//    ~BitStream();
+    ~BitStreamWriter();
 
     void Write(std::vector<bool> bits);
-    std::vector<bool> Read();
+
+    void Flush();
 
 private:
     void WriteBit(bool bit);
-    bool ReadBit(bool& bit);
 
     int bitCount;
     uint8_t buffer;
 
-    std::ifstream inFile;
     std::ofstream outFile;
 };

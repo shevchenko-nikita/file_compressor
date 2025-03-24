@@ -1,24 +1,50 @@
 #include <iostream>
 
-#include "bit_stream.h"
+#include "bitstream_reader.h"
+#include "bitstream_writer.h"
 
 int main()
 {
 
-    BitStream str("C:\\Users\\Shevchenko\\Desktop\\test.bin", "test.bin");
+//    BitStreamReader str("C:\\Users\\Shevchenko\\Desktop\\out.bin");
+//
+//    auto bits = str.Read();
+//    int cnt = 8;
+//
+//    for(int i = 0; i < bits.size(); ++i)
+//    {
+//        std::cout << bits[i];
+//
+//        --cnt;
+//        if(cnt == 0)
+//        {
+//            std::cout << ' ';
+//            cnt = 8;
+//        }
+//    }
+
+    BitStreamWriter writer("C:\\Users\\Shevchenko\\Desktop\\out.bin");
+
+    std::vector<bool> bits1 = {0, 1, 0, 0, 1, 1, 1, 0};
+
+    writer.Write(bits1);
+
+    BitStreamReader str("C:\\Users\\Shevchenko\\Desktop\\out.bin");
 
     auto bits = str.Read();
+    int cnt = 8;
 
-    int bitCount = 8;
     for(int i = 0; i < bits.size(); ++i)
     {
         std::cout << bits[i];
 
-        bitCount -= 1;
-        if(bitCount == 0)
+        --cnt;
+        if(cnt == 0)
         {
             std::cout << ' ';
-            bitCount = 8;
+            cnt = 8;
         }
     }
+
+//    BitStream
 }

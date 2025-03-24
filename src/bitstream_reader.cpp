@@ -1,12 +1,13 @@
-#include "bit_stream.h"
+#include "bitstream_reader.h"
 
-BitStream::BitStream(std::string inFileName, std::string outFileName)
-: inFile(inFileName, std::ios::binary), outFile(outFileName, std::ios::binary)
+BitStreamReader::BitStreamReader(std::string FileName)
+: inFile(FileName, std::ios::binary)
 {
     bitCount = 0;
+    buffer = 0;
 }
 
-std::vector<bool> BitStream::Read()
+std::vector<bool> BitStreamReader::Read()
 {
     std::vector<bool> bits;
 
@@ -20,7 +21,7 @@ std::vector<bool> BitStream::Read()
     return bits;
 }
 
-bool BitStream::ReadBit(bool& bit)
+bool BitStreamReader::ReadBit(bool& bit)
 {
     if(bitCount == 0)
     {
