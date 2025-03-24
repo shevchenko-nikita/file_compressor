@@ -1,7 +1,5 @@
 #include "bit_stream.h"
 
-#include <iostream>
-
 BitStream::BitStream(std::string inFileName, std::string outFileName)
 : inFile(inFileName, std::ios::binary), outFile(outFileName, std::ios::binary)
 {
