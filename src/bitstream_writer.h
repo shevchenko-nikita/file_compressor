@@ -11,8 +11,8 @@ public:
 
     ~BitStreamWriter();
 
-    void Write(std::vector<bool> bits);
-    void Write(std::string val);
+    void Write(const std::vector<bool>& bits);
+    void Write(const std::string& val);
     void Write(uint16_t val);
     void Write(uint8_t val);
 

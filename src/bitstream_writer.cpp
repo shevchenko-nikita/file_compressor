@@ -12,7 +12,7 @@ BitStreamWriter::~BitStreamWriter()
     Flush();
 }
 
-void BitStreamWriter::Write(std::vector<bool> bits)
+void BitStreamWriter::Write(const std::vector<bool>& bits)
 {
     for(auto bit : bits)
     {
@@ -30,7 +30,7 @@ void BitStreamWriter::Write(uint8_t val)
     outFile.write(reinterpret_cast<char*>(&val), sizeof(val));
 }
 
-void BitStreamWriter::Write(std::string val)
+void BitStreamWriter::Write(const std::string& val)
 {
     Write(static_cast<uint8_t>(val.size()));
     outFile.write(val.c_str(), val.size());
