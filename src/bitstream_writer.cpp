@@ -20,6 +20,22 @@ void BitStreamWriter::Write(std::vector<bool> bits)
     }
 }
 
+void BitStreamWriter::Write(uint16_t val)
+{
+    outFile.write(reinterpret_cast<char*>(&val), sizeof(val));
+}
+
+void BitStreamWriter::Write(uint8_t val)
+{
+    outFile.write(reinterpret_cast<char*>(&val), sizeof(val));
+}
+
+void BitStreamWriter::Write(std::string val)
+{
+    Write(static_cast<uint8_t>(val.size()));
+    outFile.write(val.c_str(), val.size());
+}
+
 void BitStreamWriter::WriteBit(bool bit)
 {
     buffer |= (bit << (7 - bitCount));

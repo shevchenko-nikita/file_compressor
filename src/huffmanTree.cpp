@@ -38,10 +38,10 @@ void HuffmanTree::BuildTree(const std::unordered_map<unsigned char, int> &freque
 
 void HuffmanTree::DeleteTree(HuffmanNode* node)
 {
-    if(root)
+    if(node)
     {
-        DeleteTree(root->left);
-        DeleteTree(root->right);
+        DeleteTree(node->left);
+        DeleteTree(node->right);
 
         delete node;
     }
@@ -71,7 +71,7 @@ void HuffmanTree::GenerateCodes(HuffmanNode *node, std::string code)
 
     if(!node->left && !node->right)
     {
-        encodingMap[node->data] = node->freq;
+        encodingMap[node->data] = code;
         return;
     }
 

@@ -1,50 +1,35 @@
 #include <iostream>
 
+#include "encoder.h"
 #include "bitstream_reader.h"
-#include "bitstream_writer.h"
 
 int main()
 {
+    std::string file = "C:\\Users\\Shevchenko\\Desktop\\test.bin";
 
-//    BitStreamReader str("C:\\Users\\Shevchenko\\Desktop\\out.bin");
-//
-//    auto bits = str.Read();
-//    int cnt = 8;
-//
-//    for(int i = 0; i < bits.size(); ++i)
-//    {
-//        std::cout << bits[i];
-//
-//        --cnt;
-//        if(cnt == 0)
-//        {
-//            std::cout << ' ';
-//            cnt = 8;
-//        }
-//    }
+    Encoder::EncodeFile(file);
 
-    BitStreamWriter writer("C:\\Users\\Shevchenko\\Desktop\\out.bin");
+    BitStreamReader in("output.huff");
+    auto bits = in.Read();
 
-    std::vector<bool> bits1 = {0, 1, 0, 0, 1, 1, 1, 0};
+    uint16_t x = 10;
+    std::cout << sizeof(x) << std::endl;
 
-    writer.Write(bits1);
-
-    BitStreamReader str("C:\\Users\\Shevchenko\\Desktop\\out.bin");
-
-    auto bits = str.Read();
-    int cnt = 8;
-
-    for(int i = 0; i < bits.size(); ++i)
+    std::cout << "Bits count - " << bits.size() << std::endl;
+    int cnt = 0;
+    int buffer = 0;
+    for(auto bit : bits)
     {
-        std::cout << bits[i];
+//        std::cout << bit;
 
-        --cnt;
-        if(cnt == 0)
+        buffer |= (bit << (7 - cnt));
+
+        cnt += 1;
+        if(cnt == 8)
         {
-            std::cout << ' ';
-            cnt = 8;
+            cnt = 0;
+            std::cout << buffer << ' ';
+            buffer = 0;
         }
     }
-
-//    BitStream
 }
