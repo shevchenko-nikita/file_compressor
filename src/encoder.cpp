@@ -3,8 +3,6 @@
 #include "huffmanTree.h"
 #include "bitstream_reader.h"
 
-#include <iostream>
-
 namespace Encoder
 {
     std::unordered_map<unsigned char, int>
@@ -50,11 +48,12 @@ namespace Encoder
             BitStreamWriter& out,
             const std::unordered_map<unsigned char, std::string>& encoded)
     {
-        out.Write(static_cast<uint16_t>(encoded.size()));
+        out.Write(static_cast<uint8_t>(encoded.size()));
 
         for(const auto& [key, value] : encoded)
         {
             out.Write(static_cast<uint8_t>(key));
+            out.Write(static_cast<uint8_t>(value.size()));
             out.Write(ConvertToVector(value));
         }
     }
@@ -106,6 +105,6 @@ namespace Encoder
         auto encoded = tree.GetEncodingMap();
 
         WriteHuffmanTable(out, encoded);
-//        WriteEncodedData(out, bits, encoded);
+        WriteEncodedData(out, bits, encoded);
     }
 }
