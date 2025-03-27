@@ -68,18 +68,6 @@ namespace Decoder
         return extension;
     }
 
-    std::vector<bool> ConvertToVector(std::string code)
-    {
-        std::vector<bool> bits;
-        bits.reserve(code.size());
-        for(char c : code)
-        {
-            bits.push_back((c == '1'));
-        }
-
-        return bits;
-    }
-
     void
     WriteDecodedData(
             const std::vector<bool>& bits,
