@@ -14,6 +14,31 @@ namespace Decoder
         return buffer;
     }
 
+    std::unordered_map<std::string, unsigned char>
+    GetHuffmanTable(const std::vector<bool>& bits, size_t& curBitPos)
+    {
+        std::unordered_map<std::string, unsigned char> table;
+
+        uint8_t tableSz = ReadByte(bits, curBitPos);
+
+        for(int i = 0; i < tableSz; ++i)
+        {
+            auto c = ReadByte(bits, curBitPos);
+            auto codeSz = ReadByte(bits, curBitPos);
+            std::string code;
+
+            for(int j = 0; j < codeSz; ++j)
+            {
+                code += (bits[curBitPos] == 1) ? '1' : '0';
+                curBitPos += 1;
+            }
+
+            table[code] = c;
+        }
+
+        return table;
+    }
+
     std::string GetExtension(const std::vector<bool>& bits, size_t& curBitPos)
     {
         std::string extension;
