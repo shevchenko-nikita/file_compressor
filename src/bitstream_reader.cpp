@@ -3,6 +3,11 @@
 BitStreamReader::BitStreamReader(std::string FileName)
 : inFile(FileName, std::ios::binary)
 {
+    if(!inFile.is_open())
+    {
+        throw std::runtime_error("Error: File does not exist " + FileName);
+    }
+
     bitCount = 0;
     buffer = 0;
 }

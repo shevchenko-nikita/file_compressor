@@ -48,7 +48,7 @@ namespace Encoder
             BitStreamWriter& out,
             const std::unordered_map<unsigned char, std::string>& encoded)
     {
-        out.Write(static_cast<uint8_t>(encoded.size()));
+        out.Write(static_cast<uint16_t>(encoded.size()));
 
         for(const auto& [key, value] : encoded)
         {

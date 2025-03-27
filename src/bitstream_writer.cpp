@@ -3,6 +3,11 @@
 BitStreamWriter::BitStreamWriter(std::string FileName)
 : outFile(FileName, std::ios::binary)
 {
+    if(!outFile.is_open())
+    {
+        throw std::runtime_error("Error: Can't open the file");
+    }
+
     bitCount = 0;
     buffer = 0;
 }
@@ -23,6 +28,14 @@ void BitStreamWriter::Write(const std::vector<bool>& bits)
 void BitStreamWriter::Write(uint32_t val)
 {
     for(int i = 31; i >= 0; --i)
+    {
+        WriteBit((val >> i) & 1);
+    }
+}
+
+void BitStreamWriter::Write(uint16_t val)
+{
+    for(int i = 15; i >= 0; --i)
     {
         WriteBit((val >> i) & 1);
     }

@@ -14,6 +14,7 @@ public:
     void Write(const std::vector<bool>& bits);
     void Write(const std::string& val);
     void Write(uint32_t val);
+    void Write(uint16_t val);
     void Write(uint8_t val);
 
     void Flush();

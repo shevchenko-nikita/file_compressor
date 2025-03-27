@@ -5,24 +5,13 @@
 
 namespace Decoder
 {
-    uint8_t ReadByte(const std::vector<bool>& bits, size_t& curBitPos)
+    template<typename T>
+    T ReadByte(const std::vector<bool>& bits, size_t& curBitPos, int numBits)
     {
-        uint8_t buffer = 0;
-        for(int i = 0; i < 8; ++i)
+        T buffer = 0;
+        for(int i = 0; i < numBits; ++i)
         {
-            buffer |= (bits[curBitPos] << (7 - i));
-            curBitPos += 1;
-        }
-
-        return buffer;
-    }
-
-    uint32_t ReadFourBytes(const std::vector<bool>& bits, size_t& curBitPos)
-    {
-        uint32_t buffer = 0;
-        for(int i = 0; i < 32; ++i)
-        {
-            buffer |= (bits[curBitPos] << (31 - i));
+            buffer |= (bits[curBitPos] << (numBits - 1 - i));
             curBitPos += 1;
         }
 
@@ -34,12 +23,12 @@ namespace Decoder
     {
         std::unordered_map<std::string, unsigned char> table;
 
-        uint8_t tableSz = ReadByte(bits, curBitPos);
+        auto tableSz = ReadByte<uint16_t>(bits, curBitPos, 16);
 
         for(int i = 0; i < tableSz; ++i)
         {
-            auto c = ReadByte(bits, curBitPos);
-            auto codeSz = ReadByte(bits, curBitPos);
+            auto c = ReadByte<uint8_t>(bits, curBitPos, 8);
+            auto codeSz = ReadByte<uint8_t>(bits, curBitPos, 8);
             std::string code;
 
             for(int j = 0; j < codeSz; ++j)
@@ -57,11 +46,11 @@ namespace Decoder
     std::string GetExtension(const std::vector<bool>& bits, size_t& curBitPos)
     {
         std::string extension;
-        uint8_t sz = ReadByte(bits, curBitPos);
+        auto sz = ReadByte<uint8_t>(bits, curBitPos, 8);
 
         for(uint8_t k = 0; k < sz; ++k)
         {
-            auto c = ReadByte(bits, curBitPos);
+            auto c = ReadByte<uint8_t>(bits, curBitPos, 8);
             extension += static_cast<char>(c);
         }
 
@@ -76,7 +65,7 @@ namespace Decoder
             BitStreamWriter& out)
     {
         std::string code;
-        uint32_t originFileSize = ReadFourBytes(bits, curBitPos);
+        auto originFileSize = ReadByte<uint32_t>(bits, curBitPos, 32);
         uint32_t curWrittenSize = 0;
 
         while(curBitPos < bits.size() && curWrittenSize != originFileSize)
@@ -89,7 +78,6 @@ namespace Decoder
                 out.Write(c);
                 code = "";
             }
-
             curBitPos += 1;
         }
 
