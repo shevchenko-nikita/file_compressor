@@ -17,6 +17,18 @@ namespace Decoder
         return buffer;
     }
 
+    uint32_t ReadFourBytes(const std::vector<bool>& bits, size_t& curBitPos)
+    {
+        uint32_t buffer = 0;
+        for(int i = 0; i < 32; ++i)
+        {
+            buffer |= (bits[curBitPos] << (31 - i));
+            curBitPos += 1;
+        }
+
+        return buffer;
+    }
+
     std::unordered_map<std::string, unsigned char>
     GetHuffmanTable(const std::vector<bool>& bits, size_t& curBitPos)
     {
@@ -76,8 +88,8 @@ namespace Decoder
             BitStreamWriter& out)
     {
         std::string code;
-        int originFileSize = ReadByte(bits, curBitPos);
-        int curWrittenSize = 0;
+        uint32_t originFileSize = ReadFourBytes(bits, curBitPos);
+        uint32_t curWrittenSize = 0;
 
         while(curBitPos < bits.size() && curWrittenSize != originFileSize)
         {

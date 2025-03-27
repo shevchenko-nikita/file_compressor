@@ -8,6 +8,7 @@
 namespace Decoder
 {
     uint8_t ReadByte(const std::vector<bool>& bits, size_t& curBitPos);
+    uint32_t ReadFourBytes(const std::vector<bool>& bits, size_t& curBitPos);
 
     std::vector<bool> ConvertToVector(std::string code);
 

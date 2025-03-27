@@ -105,7 +105,7 @@ namespace Encoder
         auto encoded = tree.GetEncodingMap();
 
         WriteHuffmanTable(out, encoded);
-        out.Write(bits.size());
+        out.Write(static_cast<uint32_t>(bits.size()));
         WriteEncodedData(out, bits, encoded);
     }
 }
