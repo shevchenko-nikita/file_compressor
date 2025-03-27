@@ -2,25 +2,26 @@
 
 namespace Decoder
 {
-    std::string GetExtension(const std::vector<bool>& bits, size_t& curBitPos)
+    uint8_t ReadByte(const std::vector<bool>& bits, size_t& curBitPos)
     {
-        std::string extension;
-        uint8_t sz = 0;
-        for(size_t i = 0; i < 8; ++i)
+        uint8_t buffer = 0;
+        for(int i = 0; i < 8; ++i)
         {
-            sz |= (bits[curBitPos] << (7 - i));
+            buffer |= (bits[curBitPos] << (7 - i));
             curBitPos += 1;
         }
 
+        return buffer;
+    }
+
+    std::string GetExtension(const std::vector<bool>& bits, size_t& curBitPos)
+    {
+        std::string extension;
+        uint8_t sz = ReadByte(bits, curBitPos);
+
         for(uint8_t k = 0; k < sz; ++k)
         {
-            unsigned char c = 0;
-            for(int i = 0; i < 8; ++i)
-            {
-                c |= (bits[curBitPos] << (7 - i));
-                curBitPos += 1;
-            }
-
+            auto c = ReadByte(bits, curBitPos);
             extension += static_cast<char>(c);
         }
 
@@ -33,6 +34,6 @@ namespace Decoder
         const auto bits = in.Read();
 
         size_t curBitPos = 0;
-        auto extension = GetExtension(bits, curBitPos);
+        std::string outFileName = "decoded." + GetExtension(bits, curBitPos);
     }
 }
