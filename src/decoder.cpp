@@ -53,6 +53,40 @@ namespace Decoder
         return extension;
     }
 
+    std::vector<bool> ConvertToVector(std::string code)
+    {
+        std::vector<bool> bits;
+        bits.reserve(code.size());
+        for(char c : code)
+        {
+            bits.push_back((c == '1'));
+        }
+
+        return bits;
+    }
+
+    void
+    WriteDecodedData(
+            const std::vector<bool>& bits,
+            size_t& curBitPos,
+            std::unordered_map<std::string, unsigned char>& table,
+            BitStreamWriter& out)
+    {
+        std::string code;
+
+        while(curBitPos != bits.size())
+        {
+            code += (bits[curBitPos] == 1) ? '1' : '0';
+            if(table.count(code))
+            {
+                out.Write(ConvertToVector(code));
+                code = "";
+            }
+
+            curBitPos += 1;
+        }
+    }
+
     void DecodeFile(const std::string& filePath)
     {
         BitStreamReader in(filePath);
@@ -60,5 +94,9 @@ namespace Decoder
 
         size_t curBitPos = 0;
         std::string outFileName = "decoded." + GetExtension(bits, curBitPos);
+        BitStreamWriter out(outFileName);
+
+        auto table = GetHuffmanTable(bits, curBitPos);
+        WriteDecodedData(bits, curBitPos, table, out);
     }
 }
