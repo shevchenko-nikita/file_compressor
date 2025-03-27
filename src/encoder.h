@@ -20,5 +20,5 @@ namespace Encoder
             const std::vector<bool>& bits,
             const std::unordered_map<unsigned char, std::string>& encoded);
 
-    void EncodeFile(const std::string& fileName);
+    void EncodeFile(const std::string& filePath);
 }

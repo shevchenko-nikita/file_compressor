@@ -83,11 +83,11 @@ namespace Encoder
         }
     }
 
-    void EncodeFile(const std::string& fileName)
+    void EncodeFile(const std::string& filePath)
     {
-        std::string ext = fileName.substr(fileName.find_last_of('.') + 1);
+        std::string ext = filePath.substr(filePath.find_last_of('.') + 1);
 
-        BitStreamReader in(fileName);
+        BitStreamReader in(filePath);
         auto bits = in.Read();
 
         if(bits.empty())
@@ -95,7 +95,7 @@ namespace Encoder
             return;
         }
 
-        BitStreamWriter out("C:\\Users\\Shevchenko\\Desktop\\encoded.huff");
+        BitStreamWriter out("encoded.huff");
         out.Write(ext);
 
         auto frequency = CalcByteFrequency(bits);
