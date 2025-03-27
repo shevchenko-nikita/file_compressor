@@ -20,6 +20,14 @@ void BitStreamWriter::Write(const std::vector<bool>& bits)
     }
 }
 
+void BitStreamWriter::Write(uint32_t val)
+{
+    for(int i = 31; i >= 0; --i)
+    {
+        WriteBit((val >> i) & 1);
+    }
+}
+
 void BitStreamWriter::Write(uint8_t val)
 {
     for(int i = 7; i >= 0; --i)
