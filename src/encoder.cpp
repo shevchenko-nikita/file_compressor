@@ -95,7 +95,7 @@ namespace Encoder
             return;
         }
 
-        BitStreamWriter out("encoded.huff");
+        BitStreamWriter out("C:\\Users\\Shevchenko\\Desktop\\encoded.huff");
         out.Write(ext);
 
         auto frequency = CalcByteFrequency(bits);
@@ -105,6 +105,7 @@ namespace Encoder
         auto encoded = tree.GetEncodingMap();
 
         WriteHuffmanTable(out, encoded);
+        out.Write(bits.size());
         WriteEncodedData(out, bits, encoded);
     }
 }
