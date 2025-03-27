@@ -1,21 +1,30 @@
 #include "decoder.h"
 
-#include "bitstream_reader.h"
-#include "bitstream_writer.h"
-
 namespace Decoder
 {
     std::string GetExtension(const std::vector<bool>& bits, size_t& curBitPos)
     {
         std::string extension;
-        int sz = 0;
+        uint8_t sz = 0;
         for(size_t i = 0; i < 8; ++i)
         {
             sz |= (bits[curBitPos] << (7 - i));
             curBitPos += 1;
         }
 
-        return "";
+        for(uint8_t k = 0; k < sz; ++k)
+        {
+            unsigned char c = 0;
+            for(int i = 0; i < 8; ++i)
+            {
+                c |= (bits[curBitPos] << (7 - i));
+                curBitPos += 1;
+            }
+
+            extension += static_cast<char>(c);
+        }
+
+        return extension;
     }
 
     void DecodeFile(const std::string& filePath)
