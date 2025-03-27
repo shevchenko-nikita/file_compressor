@@ -1,4 +1,7 @@
+#include <cassert>
 #include "decoder.h"
+
+#include <iostream>
 
 namespace Decoder
 {
@@ -73,17 +76,26 @@ namespace Decoder
             BitStreamWriter& out)
     {
         std::string code;
+        int originFileSize = ReadByte(bits, curBitPos);
+        int curWrittenSize = 0;
 
-        while(curBitPos != bits.size())
+        while(curBitPos < bits.size() && curWrittenSize != originFileSize)
         {
             code += (bits[curBitPos] == 1) ? '1' : '0';
             if(table.count(code))
             {
-                out.Write(ConvertToVector(code));
+                auto c = table[code];
+                curWrittenSize += 8;
+                out.Write(c);
                 code = "";
             }
 
             curBitPos += 1;
+        }
+
+        if(curWrittenSize != originFileSize)
+        {
+            assert(false);
         }
     }
 
