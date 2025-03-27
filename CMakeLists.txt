@@ -8,4 +8,5 @@ add_executable(file_compressor
         src/huffmanTree.cpp
         src/bitstream_reader.cpp
         src/bitstream_writer.cpp
-        src/encoder.cpp)
+        src/encoder.cpp
+        src/decoder.cpp)
