@@ -1,35 +1,50 @@
 #include <iostream>
 
 #include "encoder.h"
-#include "bitstream_reader.h"
+#include "decoder.h"
 
-int main()
+void HandleInput(int request, std::string file)
 {
-    std::string file = "C:\\Users\\Shevchenko\\Desktop\\test.bin";
-
-    Encoder::EncodeFile(file);
-
-    BitStreamReader in("output.huff");
-    auto bits = in.Read();
-
-    uint16_t x = 10;
-    std::cout << sizeof(x) << std::endl;
-
-    std::cout << "Bits count - " << bits.size() << std::endl;
-    int cnt = 0;
-    int buffer = 0;
-    for(auto bit : bits)
+    if(request == 1)
     {
-//        std::cout << bit;
-
-        buffer |= (bit << (7 - cnt));
-
-        cnt += 1;
-        if(cnt == 8)
-        {
-            cnt = 0;
-            std::cout << buffer << ' ';
-            buffer = 0;
-        }
+        Encoder::EncodeFile(file);
     }
+    else if(request == 2)
+    {
+        Decoder::DecodeFile(file);
+    }
+    else
+    {
+        std::cout << "Wrong request" << std::endl;
+    }
+}
+
+int main(int argc, char *argv[])
+{
+    if(argc < 2)
+    {
+        std::cerr << "Not enough arguments" << std::endl;
+        return 0;
+    }
+
+    std::string file = argv[1];
+
+    std::cout << file << std::endl;
+
+    std::cout << "Choose option:\n"
+                 "1) Compress file\n"
+                 "2) Decompress file\n";
+
+    int request;
+    std::cin >> request;
+
+    try
+    {
+        HandleInput(request, file);
+    }
+    catch(const std::exception& ex)
+    {
+        std::cerr << ex.what() << std::endl;
+    }
+
 }
