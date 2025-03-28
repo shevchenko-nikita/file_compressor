@@ -1,8 +1,6 @@
 #include <cassert>
 #include "decoder.h"
 
-#include <iostream>
-
 namespace Decoder
 {
     template<typename T>
@@ -75,7 +73,7 @@ namespace Decoder
             {
                 auto c = table[code];
                 curWrittenSize += 8;
-                out.Write(c);
+                out.Write(static_cast<uint8_t>(c));
                 code = "";
             }
             curBitPos += 1;

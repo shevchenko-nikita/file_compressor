@@ -9,7 +9,6 @@ namespace Decoder
 {
     template<typename T>
     T ReadByte(const std::vector<bool>& bits, size_t& curBitPos, int numBits);
-    uint32_t ReadFourBytes(const std::vector<bool>& bits, size_t& curBitPos);
 
     std::unordered_map<std::string, unsigned char>
     GetHuffmanTable(const std::vector<bool>& bits, size_t& curBitPos);

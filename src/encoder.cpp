@@ -3,6 +3,8 @@
 #include "huffmanTree.h"
 #include "bitstream_reader.h"
 
+#include <cassert>
+
 namespace Encoder
 {
     std::unordered_map<unsigned char, int>
@@ -80,6 +82,11 @@ namespace Encoder
                 bitCount = 0;
                 buffer = 0;
             }
+        }
+
+        if(buffer != 0)
+        {
+            assert(false);
         }
     }
 

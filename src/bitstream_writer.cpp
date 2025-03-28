@@ -71,7 +71,7 @@ void BitStreamWriter::Flush()
 {
     if(bitCount > 0)
     {
-        buffer <<= (8 - bitCount);
+//        buffer <<= (8 - bitCount);
         outFile.put(static_cast<char>(buffer));
     }
 
