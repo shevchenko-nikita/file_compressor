@@ -92,7 +92,7 @@ namespace Decoder
 
         size_t curBitPos = 0;
         std::string outFileName = "decoded." + GetExtension(bits, curBitPos);
-        BitStreamWriter out(outFileName);
+        BitStreamWriter out("../results/" + outFileName);
 
         auto table = GetHuffmanTable(bits, curBitPos);
         WriteDecodedData(bits, curBitPos, table, out);

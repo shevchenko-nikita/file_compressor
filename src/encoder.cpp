@@ -102,7 +102,7 @@ namespace Encoder
             return;
         }
 
-        BitStreamWriter out("encoded.huff");
+        BitStreamWriter out("../results/encoded.huff");
         out.Write(ext);
 
         auto frequency = CalcByteFrequency(bits);

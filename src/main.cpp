@@ -29,8 +29,6 @@ int main(int argc, char *argv[])
 
     std::string file = argv[1];
 
-    std::cout << file << std::endl;
-
     std::cout << "Choose option:\n"
                  "1) Compress file\n"
                  "2) Decompress file\n";
